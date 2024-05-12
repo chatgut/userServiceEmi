@@ -6,9 +6,6 @@ import lombok.*;
 @Entity
 @Getter
 @Setter
-@ToString
-@AllArgsConstructor
-@NoArgsConstructor
 public class User {
 
     @Id

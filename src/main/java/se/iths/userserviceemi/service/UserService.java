@@ -2,7 +2,9 @@ package se.iths.userserviceemi.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
+import se.iths.userserviceemi.mapper.UserMapper;
 import se.iths.userserviceemi.repository.UserRepository;
 
 import java.util.List;
@@ -21,4 +23,11 @@ public class UserService {
     public Optional<User> getUser(Long id) {
         return userRepository.findById(id);
     }
+
+    public void createUser(UserDTO userDTO) {
+        User user = UserMapper.mapToUser(userDTO, new User());
+        userRepository.save(user);
+    }
+
+
 }

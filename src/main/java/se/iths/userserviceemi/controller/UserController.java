@@ -1,8 +1,8 @@
 package se.iths.userserviceemi.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.*;
+import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
 import se.iths.userserviceemi.service.UserService;
 
@@ -10,12 +10,9 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @GetMapping("/user/{id}")
     public Optional<User> getUser(@PathVariable Long id) {
@@ -25,5 +22,10 @@ public class UserController {
     @GetMapping("/users")
     List<User> getAllUsers() {
         return userService.findAll();
+    }
+
+    @PostMapping
+    public void createUser(@RequestBody UserDTO userDTO) {
+        userService.createUser(userDTO);
     }
 }

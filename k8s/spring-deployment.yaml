@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-deployment
+  labels:
+    app: spring-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-deployment
+  template:
+    metadata:
+      name: spring-deployment
+      labels:
+        app: spring-deployment
+    spec:
+      containers:
+        - name: spring-deployment
+          image: user-service-emi:1
+          imagePullPolicy: IfNotPresent
+      restartPolicy: Always
+      

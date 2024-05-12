@@ -4,13 +4,13 @@ services:
     ports:
       - '8002:8002'
     environment:
-      - 'SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/userDB'
+      - 'SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/user'
   mysql:
     image: 'mysql:latest'
     environment:
-      - 'MYSQL_DATABASE=userDB'
-      - 'MYSQL_PASSWORD=password'
-      - 'MYSQL_ROOT_PASSWORD=password'
-      - 'MYSQL_USER=user'
+      - 'MYSQL_DATABASE=user'
+      - 'MYSQL_PASSWORD=secret'
+      - 'MYSQL_ROOT_PASSWORD=verysecret'
+      - 'MYSQL_USER=myuser'
     ports:
       - '3306:3306'
