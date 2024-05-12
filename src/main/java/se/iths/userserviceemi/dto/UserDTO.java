@@ -1,4 +1,5 @@
 package se.iths.userserviceemi.dto;
 
-public class UserDTO {
+public record UserDTO(String name, String imageLink,  String userToken) {
+
 }
