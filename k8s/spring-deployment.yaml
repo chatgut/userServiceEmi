@@ -3,21 +3,23 @@ kind: Deployment
 metadata:
   name: spring-deployment
   labels:
-    app: spring-deployment
+    app: user-service
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: spring-deployment
+      app: user-service
   template:
     metadata:
-      name: spring-deployment
+      name: user-service
       labels:
-        app: spring-deployment
+        app: user-service
     spec:
       containers:
-        - name: spring-deployment
+        - name: user-service
           image: user-service-emi:1
           imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8002
       restartPolicy: Always
       
