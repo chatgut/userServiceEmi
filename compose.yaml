@@ -2,7 +2,7 @@ services:
   spring:
     image: 'user-service-emi:1'
     ports:
-      - '8002:8002'
+      - '8003:8003'
     environment:
       - 'SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/user'
   mysql:

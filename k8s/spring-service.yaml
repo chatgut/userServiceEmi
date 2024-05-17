@@ -3,11 +3,13 @@ kind: Service
 metadata:
   name: spring-service
 spec:
+  type: ClusterIP
   selector:
-    app: spring-service
+    app: user-service
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 8080
-  type: NodePort
+      port: 8003
+      targetPort: 8003
+      nodePort: 30020
+
   
