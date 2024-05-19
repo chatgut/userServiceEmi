@@ -1,10 +1,12 @@
 package se.iths.userserviceemi.mapper;
 
 import jakarta.persistence.Column;
+import org.springframework.stereotype.Component;
 import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
-
+@Component
 public class UserMapper {
+
 
     public static UserDTO mapToUserDTO(User user, UserDTO userDTO) {
         userDTO.setUserName(user.getUserName());
