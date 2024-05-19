@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
 import se.iths.userserviceemi.mapper.UserMapper;
@@ -26,8 +27,8 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> getUser(Long id) {
-        return userRepository.findById(id)
+    public Optional<UserDTO> getUser(String userToken) {
+        return userRepository.findByUserToken(userToken)
                 .map(user -> UserMapper.mapToUserDTO(user, new UserDTO()));
     }
 
@@ -52,4 +53,5 @@ public class UserService {
             return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
         }
     }
+
 }

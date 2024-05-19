@@ -20,6 +20,6 @@ spec:
           image: user-service-emi:1
           imagePullPolicy: IfNotPresent
           ports:
-            - containerPort: 8003
+            - containerPort: 8083
       restartPolicy: Always
       

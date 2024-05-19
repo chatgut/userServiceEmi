@@ -11,19 +11,20 @@ import se.iths.userserviceemi.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
-
+//@CrossOrigin(origins = "http://localhost:8080/", maxAge = 60, allowedHeaders = {"userToken"})
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return userService.getUser(id)
+    @GetMapping("/{userToken}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String userToken) {
+        return userService.getUser(userToken)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with that ID found"));
     }
+
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {

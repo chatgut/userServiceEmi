@@ -8,8 +8,8 @@ spec:
     app: user-service
   ports:
     - protocol: TCP
-      port: 8003
-      targetPort: 8003
+      port: 8083
+      targetPort: 8080
       nodePort: 30020
 
   
