@@ -1,13 +1,11 @@
-# User Service - Microservice with Spring Boot and MySQL database
+# User Service
 
-Runs on port 8083.
+Runs on port 8083 with a MySQL database on port 3306.
 
 ## Getting Started
-Start a mySQL docker container:
+How to run:
 
-docker run --name userServiceDB -e MYSQL_ROOT_PASSWORD=verysecret -e 'MYSQL_ROOT_HOST=%' -e MYSQL_DATABASE=user -e MYSQL_USER=myuser -e MYSQL_PASSWORD=secret -v $HOME/var/lib/mysql:/var/lib/mysql -p 3306:3306 mysql:latest
-
-download the image and run the image: docker pull ghcr.io/chatgut/user-service-emi:1
+Clone the repository and run the following command: docker compose up
 
 ## Endpoints
 The following endpoints are available:
