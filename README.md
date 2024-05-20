@@ -11,15 +11,24 @@ Clone the repository and run the following command: docker compose up
 The following endpoints are available:
 
 ### Endpoint: POST /users
-- userName
-- firstName
-- lastName
-- imageUrl (optional)
 
 Example:
 
+{
+    "userName": "Emi",
+    "firstName": "Emmelie",
+    "lastName": "Johansson",
+    "imageUrl": "https://http.cat/201"
+}
 
-output: http://localhost:8083/users/1
+User name has to be unique. Image url is optional.
+
+Response:
+200 OK if user is created.
+409 Conflict if user with that user name already exists.
+
+
+### Endpoint: GET /users
 
 ### Endpoint: GET /users/{id}
 
