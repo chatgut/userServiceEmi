@@ -9,6 +9,7 @@ public class UserMapper {
 
 
     public static UserDTO mapToUserDTO(User user, UserDTO userDTO) {
+        userDTO.setId(user.getId());
         userDTO.setUserName(user.getUserName());
         userDTO.setFirstName(user.getFirstName());
         userDTO.setLastName(user.getLastName());
@@ -19,6 +20,7 @@ public class UserMapper {
     }
 
     public static User mapToUser(UserDTO userDTO, User user) {
+        user.setId(userDTO.getId());
         user.setUserName(userDTO.getUserName());
         user.setFirstName(userDTO.getFirstName());
         user.setLastName(userDTO.getLastName());

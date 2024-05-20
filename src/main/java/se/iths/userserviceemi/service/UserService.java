@@ -27,12 +27,15 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> getUser(String userToken) {
-        return userRepository.findByUserToken(userToken)
+    public Optional<UserDTO> getUser(Long id) {
+        return userRepository.findById(id)
                 .map(user -> UserMapper.mapToUserDTO(user, new UserDTO()));
     }
 
     public void createUser(UserDTO userDTO) {
+        if (userRepository.existsByUserName(userDTO.getUserName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        }
         User user = UserMapper.mapToUser(userDTO, new User());
         userRepository.save(user);
     }

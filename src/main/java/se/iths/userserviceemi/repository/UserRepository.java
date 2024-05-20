@@ -10,5 +10,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends ListCrudRepository<User, Long> {
     Optional<User> findByUserToken(String userToken);
+    boolean existsByUserName(String userName);
 
 }

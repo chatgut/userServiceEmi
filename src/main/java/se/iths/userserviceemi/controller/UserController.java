@@ -18,9 +18,9 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{userToken}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable String userToken) {
-        return userService.getUser(userToken)
+    @GetMapping("/{id}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+        return userService.getUser(id)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with that ID found"));
     }
@@ -42,4 +42,6 @@ public class UserController {
     public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
         return userService.updateUser(id, user);
     }
+
+
 }
