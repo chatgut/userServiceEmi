@@ -41,20 +41,18 @@ public class UserService {
     }
 
 
-    public ResponseEntity<String> updateUser(Long id, User user) {
-        Optional<User> existingUserOptional = userRepository.findById(id);
-        if (existingUserOptional.isPresent()) {
-            User existingUser = existingUserOptional.get();
-            existingUser.setUserName(user.getUserName());
-            existingUser.setFirstName(user.getFirstName());
-            existingUser.setLastName(user.getLastName());
-            existingUser.setImageUrl(user.getImageUrl());
-            existingUser.setNumberOfMessages(user.getNumberOfMessages());
-            userRepository.save(existingUser);
-            return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
-        }
+    public void updateUser(Long id, UserDTO userDTO) {
+        User existingUser = userRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        existingUser.setUserName(userDTO.getUserName());
+        existingUser.setFirstName(userDTO.getFirstName());
+        existingUser.setLastName(userDTO.getLastName());
+        existingUser.setUserToken(userDTO.getUserToken());
+        existingUser.setImageUrl(userDTO.getImageUrl());
+        existingUser.setNumberOfMessages(userDTO.getNumberOfMessages());
+
+        userRepository.save(existingUser);
     }
 
 }

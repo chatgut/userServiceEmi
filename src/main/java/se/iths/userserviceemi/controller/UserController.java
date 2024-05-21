@@ -1,5 +1,6 @@
 package se.iths.userserviceemi.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,14 +34,15 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<Void> createUser(@Valid @RequestBody UserDTO userDTO) {
         userService.createUser(userDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @RequestBody User user) {
-        return userService.updateUser(id, user);
+    public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+        userService.updateUser(id, userDTO);
+        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 
 
