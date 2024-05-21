@@ -56,7 +56,7 @@ Response:
 
 Updates an existing user.
 
-´´´
+```
 Example:
 {
 "username":"Emme",
@@ -64,7 +64,7 @@ Example:
 "lastName": "Johansson",
 "imageUrl": "https://http.cat/201"
 }
-´´´
+```
 
 Where username "Emi" has been changed to "Emme".
 
