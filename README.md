@@ -2,10 +2,19 @@
 
 Runs on port 8083 with a MySQL database on port 3306.
 
+The service is used for:
+- Creating a new user profile.
+- Getting a user profile by user ID.
+- Getting all users profiles.
+- Updating an existing user profile.
+
 ## Getting Started
 How to run:
 
-Clone the repository and run the following command: docker compose up
+Clone the repository and run the following command: 
+```
+docker compose up
+```
 
 ## Endpoints
 The following endpoints are available:
@@ -31,7 +40,7 @@ Example:
 ````
 
 {
-    "userName": "Emi",
+    "username": "Emi",
     "firstName": "Emmelie",
     "lastName": "Johansson",
     "imageUrl": "https://http.cat/201"
@@ -43,6 +52,21 @@ Response:
 - 201 Created if user is created.
 - 409 Conflict if username already exists
 
+### Endpoint: PUT /users/{userID}
+
+Updates an existing user.
+
+´´´
+Example:
+{
+"username":"Emme",
+"firstName": "Emmelie",
+"lastName": "Johansson",
+"imageUrl": "https://http.cat/201"
+}
+´´´
+
+Where username "Emi" has been changed to "Emme".
 
 
 
