@@ -10,7 +10,22 @@ Clone the repository and run the following command: docker compose up
 ## Endpoints
 The following endpoints are available:
 
+### Endpoint: GET /users
+
+Returns an array of users, or an empty array if no users are found.
+
+### Endpoint: GET /users/{userID}
+
+Returns user profile information:
+- User name
+- First name
+- Last  name
+- Profile picture
+- Number of posts
+
 ### Endpoint: POST /users
+
+Creates a new user.
 
 Example:
 ````
@@ -25,23 +40,9 @@ Example:
 User name has to be unique. Image url is optional.
 
 Response:
-200 OK if user is created.
-409 Conflict if user with that user name already exists.
+- 201 Created if user is created.
+- 409 Conflict if username already exists
 
 
-### Endpoint: GET /users
 
-### Endpoint: GET /users/{id}
-
-Example:
-
-## Responses
-POST localhost:8083/users
-200 OK if user is created
-GET localhost:8083/users/{userToken}
-200 OK if there is a user with that token
-404 NOT FOUND if there is no user with that token
-GET localhost:8083/users/users
-200 OK if there is an existing image already uploaded
-404 NOT FOUNDif there is no matching image
 
