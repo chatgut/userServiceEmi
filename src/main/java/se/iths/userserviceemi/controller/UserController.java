@@ -19,12 +19,13 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
-        return userService.getUser(id)
+    @GetMapping("/{userID}")
+    public ResponseEntity<UserDTO> getUser(@PathVariable String userID) {
+        return userService.getUser(userID)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with that ID found"));
     }
+
 
 
     @GetMapping
@@ -39,9 +40,9 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
-        userService.updateUser(id, userDTO);
+    @PutMapping("/{userID}")
+    public ResponseEntity<String> updateUser(@PathVariable String userID, @Valid @RequestBody UserDTO userDTO) {
+        userService.updateUser(userID, userDTO);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 

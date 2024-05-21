@@ -8,7 +8,7 @@ public class UserDTO {
     private long id;
 
     @NotBlank(message = "Username is mandatory")
-    private String userName;
+    private String username;
 
     @NotBlank(message = "First name is mandatory")
     private String firstName;
@@ -18,7 +18,7 @@ public class UserDTO {
 
     private String imageUrl;
 
-    private String userToken;
+    private String userID;
 
     private int numberOfMessages;
 }

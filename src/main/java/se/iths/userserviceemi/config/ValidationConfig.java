@@ -1,4 +1,4 @@
-package se.iths.userserviceemi;
+package se.iths.userserviceemi.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

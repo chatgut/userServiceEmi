@@ -10,6 +10,9 @@ services:
       - 'SPRING_DATASOURCE_URL=jdbc:mysql://userservice-mysql:3306/user'
   userservice-mysql:
     image: 'mysql:latest'
+    container_name: userservice-db
+    volumes:
+      - userservice-mysql:/var/lib/mysql
     healthcheck:
       test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
       timeout: 10s
@@ -168,3 +171,4 @@ volumes:
   dbData:
   dbWR:
   db_mysql:
+  userservice-mysql:

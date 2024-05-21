@@ -13,7 +13,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, unique = true)
-    private String userName;
+    private String username;
 
     @Column(nullable = false)
     private String firstName;
@@ -22,7 +22,7 @@ public class User {
     private String lastName;
 
     @Column(unique = true)
-    private String userToken;
+    private String userID;
 
     private String imageUrl;
 

@@ -2,7 +2,6 @@ package se.iths.userserviceemi.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import se.iths.userserviceemi.dto.UserDTO;
@@ -27,13 +26,13 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<UserDTO> getUser(Long id) {
-        return userRepository.findById(id)
+    public Optional<UserDTO> getUser(String userID) {
+        return userRepository.findByUserID(userID)
                 .map(user -> UserMapper.mapToUserDTO(user, new UserDTO()));
     }
 
     public void createUser(UserDTO userDTO) {
-        if (userRepository.existsByUserName(userDTO.getUserName())) {
+        if (userRepository.existsByUsername(userDTO.getUsername())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
         }
         User user = UserMapper.mapToUser(userDTO, new User());
@@ -41,18 +40,29 @@ public class UserService {
     }
 
 
-    public void updateUser(Long id, UserDTO userDTO) {
-        User existingUser = userRepository.findById(id)
+    public void updateUser(String userID, UserDTO userDTO) {
+        User existingUser = userRepository.findByUserID(userID)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
-        existingUser.setUserName(userDTO.getUserName());
+        existingUser.setUsername(userDTO.getUsername());
         existingUser.setFirstName(userDTO.getFirstName());
         existingUser.setLastName(userDTO.getLastName());
-        existingUser.setUserToken(userDTO.getUserToken());
+        existingUser.setUserID(userDTO.getUserID());
         existingUser.setImageUrl(userDTO.getImageUrl());
         existingUser.setNumberOfMessages(userDTO.getNumberOfMessages());
 
         userRepository.save(existingUser);
     }
 
+    public UserDTO getUserByUserID(String userID) {
+        User user = getUserByHeader(userID);
+        if (user == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
+        }
+        return UserMapper.mapToUserDTO(user, new UserDTO());
+    }
+
+    private User getUserByHeader(String userID) {
+        return userRepository.findByUserID(userID).get();
+    }
 }
