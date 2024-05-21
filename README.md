@@ -13,6 +13,7 @@ The following endpoints are available:
 ### Endpoint: POST /users
 
 Example:
+````
 
 {
     "userName": "Emi",
@@ -20,7 +21,7 @@ Example:
     "lastName": "Johansson",
     "imageUrl": "https://http.cat/201"
 }
-
+````
 User name has to be unique. Image url is optional.
 
 Response:
