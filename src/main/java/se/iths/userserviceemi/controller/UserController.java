@@ -12,7 +12,7 @@ import se.iths.userserviceemi.service.UserService;
 
 import java.util.List;
 import java.util.Optional;
-//@CrossOrigin(origins = "http://localhost:8080/", maxAge = 60, allowedHeaders = {"userToken"})
+@CrossOrigin()
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
@@ -21,12 +21,10 @@ public class UserController {
 
     @GetMapping("/{userID}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String userID) {
-        return userService.getUser(userID)
+        return userService.getUserByUserID(userID)
                 .map(userDTO -> new ResponseEntity<>(userDTO, HttpStatus.OK))
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with that ID found"));
     }
-
-
 
     @GetMapping
     public ResponseEntity<List<UserDTO>> getAllUsers() {
@@ -35,14 +33,8 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> createUser(@Valid @RequestBody UserDTO userDTO) {
-        userService.createUser(userDTO);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @PutMapping("/{userID}")
-    public ResponseEntity<String> updateUser(@PathVariable String userID, @Valid @RequestBody UserDTO userDTO) {
-        userService.updateUser(userID, userDTO);
+    public ResponseEntity<String> createOrUpdateUser(@RequestBody @Valid UserDTO userDTO, @RequestHeader("userID") String userID) {
+        userService.createOrUpdateUser(userDTO, userID);
         return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
     }
 

@@ -5,7 +5,7 @@ services:
       mysql:
         condition: service_healthy
     ports:
-      - '8083:8080'
+      - '8002:8080'
     environment:
       - 'SPRING_DATASOURCE_URL=jdbc:mysql://userservice-mysql:3306/user'
   userservice-mysql:
@@ -85,29 +85,7 @@ services:
     ports:
       - "15672:15672"
       - "5672:5672"
-  usersapp:
-    image: ghcr.io/chatgut/userservice:1.0
-    container_name: userservice
-    ports:
-      - "8002:8002"
-    depends_on:
-      - dbUsers
-    environment:
-      DB_URL: jdbc:mysql://dbUsers:3306/userService
-      DB_USER: developer
-      DB_PASSWORD: password
 
-  dbUsers:
-    image: mysql:latest
-    environment:
-      MYSQL_ROOT_HOST: '%'
-      MYSQL_ROOT_USER: root
-      MYSQL_ROOT_PASSWORD: password
-      MYSQL_DATABASE: userService
-      MYSQL_PASSWORD: password
-      MYSQL_USER: developer
-    volumes:
-      - dbUsers:/var/lib/mysql
 
   worthReading:
     image: ghcr.io/chatgut/worthreadingservice:master

@@ -5,20 +5,10 @@ import lombok.Data;
 
 @Data
 public class UserDTO {
-    private long id;
 
-    @NotBlank(message = "Username is mandatory")
-    private String username;
+    private String name;
 
-    @NotBlank(message = "First name is mandatory")
-    private String firstName;
-
-    @NotBlank(message = "Last name is mandatory")
-    private String lastName;
-
-    private String imageUrl;
-
-    private String userID;
+    private String imageLink;
 
     private int numberOfMessages;
 }
