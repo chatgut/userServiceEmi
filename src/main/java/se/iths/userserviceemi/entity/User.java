@@ -22,7 +22,7 @@ public class User {
     @Column(unique = true)
     private String userID;
 
-    private String imageUrl;
+    private String imageLink;
 
     private int numberOfMessages;
 }

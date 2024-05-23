@@ -1,7 +1,9 @@
 package se.iths.userserviceemi.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
 import se.iths.userserviceemi.mapper.UserMapper;
@@ -16,6 +18,7 @@ import java.util.stream.Collectors;
 public class UserService {
 
     private final UserRepository userRepository;
+
     public List<UserDTO> findAll() {
         return userRepository.findAll().stream()
                 .map(user -> UserMapper.mapToUserDTO(user, new UserDTO()))
@@ -33,17 +36,24 @@ public class UserService {
     }
 
     private void updateUser(User existingUser, UserDTO userDTO) {
-        existingUser.setUsername(userDTO.getName());
-        existingUser.setImageUrl(userDTO.getImageLink());
-        userRepository.save(existingUser);
+        String usernameExistingUser = existingUser.getUsername();
+        String nameDTO = userDTO.getName();
+        if (userRepository.existsByUsername(userDTO.getName()) && !usernameExistingUser.equals(nameDTO)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
+        } else {
+            existingUser.setUsername(nameDTO);
+            existingUser.setImageLink(userDTO.getImageLink());
+            userRepository.save(existingUser);
+        }
     }
 
     private void createUser(UserDTO userDTO, String userID) {
         User newUser = new User();
         newUser.setUsername(userDTO.getName());
-        newUser.setImageUrl(userDTO.getImageLink());
+        newUser.setImageLink(userDTO.getImageLink());
         newUser.setUserID(userID);
         userRepository.save(newUser);
+
     }
 
     public Optional<UserDTO> getUserByUserID(String userID) {
@@ -54,4 +64,6 @@ public class UserService {
     private Optional<User> getUserByHeader(String userID) {
         return userRepository.findByUserID(userID);
     }
+
 }
+

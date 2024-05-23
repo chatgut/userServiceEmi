@@ -9,14 +9,14 @@ public class UserMapper {
 
     public static UserDTO mapToUserDTO(User user, UserDTO userDTO) {
         userDTO.setName(user.getUsername());
-        userDTO.setImageLink(user.getImageUrl());
+        userDTO.setImageLink(user.getImageLink());
         userDTO.setNumberOfMessages(user.getNumberOfMessages());
         return userDTO;
     }
 
     public static User mapToUser(UserDTO userDTO, User user) {
         user.setUsername(userDTO.getName());
-        user.setImageUrl(userDTO.getImageLink());
+        user.setImageLink(userDTO.getImageLink());
         user.setNumberOfMessages(userDTO.getNumberOfMessages());
         return user;
     }
