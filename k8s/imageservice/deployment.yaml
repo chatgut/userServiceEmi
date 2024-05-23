@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imageservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imageservice
+  template:
+    metadata:
+      labels:
+        app: imageservice
+    spec:
+      containers:
+        - name: imageservice
+          image: ghcr.io/chatgut/imageservicebov:sha-925024f
+          ports:
+            - containerPort: 8001
+          env:
+            - name: DB_URL
+              value: imageservice-mysql:3306/imageservice-mysql
+            - name: DB_USER
+              value: developer
+            - name: DB_PASS
+              value: password
+      

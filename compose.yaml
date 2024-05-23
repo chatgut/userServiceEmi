@@ -1,4 +1,5 @@
 services:
+
   userservice:
     image: 'user-service-emi:1'
     depends_on:
@@ -8,6 +9,7 @@ services:
       - '8002:8080'
     environment:
       - 'SPRING_DATASOURCE_URL=jdbc:mysql://userservice-mysql:3306/user'
+
   userservice-mysql:
     image: 'mysql:latest'
     container_name: userservice-db
@@ -27,10 +29,13 @@ services:
     ports:
     - '3306:3306'
 
+
   frontend:
     image: ghcr.io/chatgut/frontend:0.0.3
     ports:
-      - "8081:8080"
+      - "8080:8080"
+
+
   authservice:
     image: ghcr.io/chatgut/authservice2:latest
     depends_on:
@@ -56,6 +61,7 @@ services:
       MYSQL_HOST: '%'
     ports:
       - "3307:3306"
+
   app:
     image: ghcr.io/chatgut/micropostservice:main
     container_name: postService
@@ -118,6 +124,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+
+
   imageservice:
     image: ghcr.io/chatgut/imageservicebov:sha-925024f
     depends_on:

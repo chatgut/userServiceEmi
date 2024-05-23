@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authservice-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authservice-mysql
+  template:
+    metadata:
+      labels:
+        app: authservice-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_DATABASE
+              value: authservice-mysql
+            - name: MYSQL_USER
+              value: developer
+            - name: MYSQL_PASSWORD
+              value: password
+            - name: MYSQL_ROOT_PASSWORD
+              value: password
+            - name: MYSQL_ROOT_HOST
+              value: '%'
+          volumeMounts:
+            - name: db-auth
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: db-auth
+          persistentVolumeClaim:
+            claimName: authservice-mysql-pvc

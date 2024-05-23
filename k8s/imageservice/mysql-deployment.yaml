@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: imageservice-mysql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: imageservice-mysql
+  template:
+    metadata:
+      labels:
+        app: imageservice-mysql
+    spec:
+      containers:
+        - name: mysql
+          image: mysql:latest
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_HOST
+              value: "%"
+            - name: MYSQL_ROOT_PASSWORD
+              value: root
+            - name: MYSQL_DATABASE
+              value: imageservice-mysql
+            - name: MYSQL_USER
+              value: developer
+            - name: MYSQL_PASSWORD
+              value: password
+          volumeMounts:
+            - name: mysql-persistent-storage
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: imageservice-mysql-pvc
+      
