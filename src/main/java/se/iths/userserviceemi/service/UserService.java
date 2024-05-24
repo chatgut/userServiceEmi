@@ -36,6 +36,8 @@ public class UserService {
     private UserDTO updateUser(String userID, UserDTO userDTO) {
         User existingUser = userRepository.findByUserID(userID).get();
         existingUser.setUsername(userDTO.getName());
+        existingUser.setFirstName(userDTO.getFirstName());
+        existingUser.setLastName(userDTO.getLastName());
         existingUser.setImageLink(userDTO.getImageLink());
         userRepository.save(existingUser);
         return UserMapper.mapToUserDTO(existingUser, new UserDTO());
@@ -44,6 +46,8 @@ public class UserService {
     private UserDTO createUser(UserDTO userDTO, String userID) {
         User newUser = UserMapper.mapToUser(userDTO, new User());
         newUser.setUsername(userDTO.getName());
+        newUser.setFirstName(userDTO.getFirstName());
+        newUser.setLastName(userDTO.getLastName());
         newUser.setImageLink(userDTO.getImageLink());
         newUser.setUserID(userID);
         userRepository.save(newUser);
