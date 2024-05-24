@@ -29,14 +29,14 @@ Returns user profile information:
 - profile picture
 - number of messages
 
-  Example:
-  ````
-   "name": "Otto",
-    "firstName": "Karl-Otto",
-    "lastName": "Olsson",
-    "userID": "f2334cb7-2fbf-44a9-aabf-fb90f2c0a68e",
-    "imageLink": "https://http.cat/201",
-    "numberOfMessages": 0
+Example:
+````
+ "name": "Otto",
+  "firstName": "Karl-Otto",
+  "lastName": "Olsson",
+  "userID": "f2334cb7-2fbf-44a9-aabf-fb90f2c0a68e",
+  "imageLink": "https://http.cat/201",
+  "numberOfMessages": 0
 ````
 Response:
 - 200 OK if user is found.
