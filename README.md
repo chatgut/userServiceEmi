@@ -19,20 +19,23 @@ docker compose up
 ## Endpoints
 The following endpoints are available:
 
-### Endpoint: GET /users/all
-
-Returns an array of all user profiles, or an empty array if no users are found.
-
 ### Endpoint: GET /users/{userID}
 
 Returns user profile information:
-- Username
-- Profile picture
-- Number of posts
+    - username
+    - first name
+    - last name
+    - user ID
+    - profile picture
+    - number of messages
 
 Response:
 - 200 OK if user is found.
 - 404 Not found if no user with the given ID is found.
+
+### Endpoint: GET /users/all
+
+Returns an array of user profile information for all users, or an empty array if no users are found.
 
 ### Endpoint: POST /users
 
@@ -42,8 +45,8 @@ Example:
 ````
 
 {
-    "username": "Emi",
-    "imageUrl": "https://http.cat/201"
+    "name": "Emi",
+    "imageLink": "https://http.cat/201"
 }
 ````
 User name has to be unique. Image url is optional.
