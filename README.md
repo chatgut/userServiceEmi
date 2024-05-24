@@ -30,6 +30,10 @@ Returns user profile information:
 - Profile picture
 - Number of posts
 
+Response:
+- 200 OK if user is found.
+- 404 Not found if no user with the given ID is found.
+
 ### Endpoint: POST /users
 
 Creates a new user profile or updates a user profile if a user with that user id already exists.
@@ -45,7 +49,7 @@ Example:
 User name has to be unique. Image url is optional.
 
 Response:
-- 201 Created if user is created.
-- 409 Conflict if username already exists
+- 200 OK if user is created or updated.
+- 409 Conflict if username already exists for a different user.
 
 
