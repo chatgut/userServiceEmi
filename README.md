@@ -19,9 +19,9 @@ docker compose up
 ## Endpoints
 The following endpoints are available:
 
-### Endpoint: GET /users
+### Endpoint: GET /users/all
 
-Returns an array of user profiles, or an empty array if no users are found.
+Returns an array of all user profiles, or an empty array if no users are found.
 
 ### Endpoint: GET /users/{userID}
 
