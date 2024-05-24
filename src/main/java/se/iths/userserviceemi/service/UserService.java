@@ -1,9 +1,8 @@
 package se.iths.userserviceemi.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
 import se.iths.userserviceemi.mapper.UserMapper;
@@ -26,34 +25,29 @@ public class UserService {
     }
 
 
-    public void createOrUpdateUser(UserDTO userDTO, String userID) {
-        Optional<User> existingUserOptional = userRepository.findByUserID(userID);
-        if (existingUserOptional.isPresent()) {
-            updateUser(existingUserOptional.get(), userDTO);
+    public UserDTO createOrUpdateUser(UserDTO userDTO, String userID) {
+        if (userRepository.findByUserID(userID).isPresent()) {
+            return updateUser(userID, userDTO);
         } else {
-            createUser(userDTO, userID);
+            return createUser(userDTO, userID);
         }
     }
 
-    private void updateUser(User existingUser, UserDTO userDTO) {
-        String usernameExistingUser = existingUser.getUsername();
-        String nameDTO = userDTO.getName();
-        if (userRepository.existsByUsername(userDTO.getName()) && !usernameExistingUser.equals(nameDTO)) {
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Username already exists");
-        } else {
-            existingUser.setUsername(nameDTO);
-            existingUser.setImageLink(userDTO.getImageLink());
-            userRepository.save(existingUser);
-        }
+    private UserDTO updateUser(String userID, UserDTO userDTO) {
+        User existingUser = userRepository.findByUserID(userID).get();
+        existingUser.setUsername(userDTO.getName());
+        existingUser.setImageLink(userDTO.getImageLink());
+        userRepository.save(existingUser);
+        return UserMapper.mapToUserDTO(existingUser, new UserDTO());
     }
 
-    private void createUser(UserDTO userDTO, String userID) {
-        User newUser = new User();
+    private UserDTO createUser(UserDTO userDTO, String userID) {
+        User newUser = UserMapper.mapToUser(userDTO, new User());
         newUser.setUsername(userDTO.getName());
         newUser.setImageLink(userDTO.getImageLink());
         newUser.setUserID(userID);
         userRepository.save(newUser);
-
+        return UserMapper.mapToUserDTO(newUser, new UserDTO());
     }
 
     public Optional<UserDTO> getUserByUserID(String userID) {
@@ -63,6 +57,19 @@ public class UserService {
 
     private Optional<User> getUserByHeader(String userID) {
         return userRepository.findByUserID(userID);
+    }
+
+
+    public void incrementMessageCount(String userID) {
+        Optional<User> user = userRepository.findByUserID(userID);
+        if (user.isPresent()) {
+            Integer numberOfMessages = userRepository.getNumberOfMessages(userID);
+            if (numberOfMessages != null) {
+                int newNumberOfMessages = numberOfMessages + 1;
+                user.get().setNumberOfMessages(newNumberOfMessages);
+                userRepository.save(user.get());
+            }
+        }
     }
 
 }

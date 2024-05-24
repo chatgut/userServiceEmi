@@ -11,4 +11,7 @@ import java.util.Optional;
 public interface UserRepository extends ListCrudRepository<User, Long> {
     boolean existsByUsername(String username);
     Optional<User> findByUserID(String userID);
+
+    @Query("SELECT u.numberOfMessages FROM User u WHERE u.userID = :userID")
+    Integer getNumberOfMessages(String userID);
 }

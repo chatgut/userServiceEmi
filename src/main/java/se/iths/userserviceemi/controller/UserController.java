@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import se.iths.userserviceemi.dto.UserDTO;
 import se.iths.userserviceemi.entity.User;
+import se.iths.userserviceemi.repository.UserRepository;
 import se.iths.userserviceemi.service.UserService;
 
 import java.util.List;
@@ -18,6 +19,7 @@ import java.util.Optional;
 @AllArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @GetMapping("/{userID}")
     public ResponseEntity<UserDTO> getUser(@PathVariable String userID) {
@@ -26,16 +28,16 @@ public class UserController {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "No user with that ID found"));
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserDTO>> getAllUsers() {
         List<UserDTO> users = userService.findAll();
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<String> createOrUpdateUser(@RequestBody @Valid UserDTO userDTO, @RequestHeader("userID") String userID) {
-        userService.createOrUpdateUser(userDTO, userID);
-        return new ResponseEntity<>("User updated successfully", HttpStatus.OK);
+    public ResponseEntity<UserDTO> createOrUpdateUser(@RequestBody @Valid UserDTO userDTO, @RequestHeader("userID") String userID) {
+        UserDTO createdOrUpdatedUser = userService.createOrUpdateUser(userDTO, userID);
+        return new ResponseEntity<>(createdOrUpdatedUser, HttpStatus.OK);
     }
 
 

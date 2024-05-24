@@ -12,6 +12,9 @@ public class UserDTO {
 
     private String lastName;
 
+    private String userID;
+
+
     private String imageLink;
 
     private int numberOfMessages;
